@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:fb="http://ogp.me/ns/fb#">
+    <head>
+        <meta charset="utf-8">
+        <title>形策展：科技變形的實驗場 - 臺大藝術季 NTU ArtFest 23rd</title>
+        <meta name="description" content="線上虛擬實境展場">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta property="og:image" content="images/vr-preview.png" />
+        <meta property="og:image:width" content="1334"/>
+        <meta property="og:image:height" content="750"/>
+        <script src="aframe.min.js"></script>
+        <script src="aframe-event-set-component.min.js"></script>
+    </head>
+    <body>
+        <a-scene>
+            <a-assets>
+                <!-- Scene 0: map -->
+                <img id="map" src="images/map_flipped.png">
+                <img id="exhibition-title" src="images/exhibition-title.png">
+                <img id="exhibition-desc" src="images/exhibition-desc.png">
+                <img id="title-world" src="images/title-world.png">
+                <img id="title-forest" src="images/title-forest.png">
+                <img id="title-rocks" src="images/title-rocks.png">
+                <img id="title-water" src="images/title-water.png">
+                <img id="thumb-world" src="images/thumb-world.png">
+                <img id="thumb-forest" src="images/thumb-forest.png">
+                <img id="thumb-rocks" src="images/thumb-rocks.png">
+                <img id="thumb-water" src="images/thumb-water.png">
+                <img id="place-world" src="images/place-world.png">
+                <img id="place-forest" src="images/place-forest.png">
+                <img id="place-rocks" src="images/place-rocks.png">
+                <img id="place-water" src="images/place-water.png">
+                <img id="words-forest" src="images/words-forest.png">
+                <img id="words-rocks" src="images/words-rocks.png">
+                <img id="words-water" src="images/words-water.png">
+
+                <!-- Back button -->
+                <img id="back" src="images/back.png">
+
+                <!-- Scene 1: world -->
+                <img id="sphere-world" src="spheres/world.jpg">
+                <img id="desc-world" src="images/desc-world.png">
+
+                <!-- Scene 2: forest -->
+                <img id="sphere-forest" src="spheres/forest.jpg">
+                <img id="desc-forest" src="images/desc-forest.png">
+                <img id="label-forest-0" src="images/label-forest-0.png">
+                <img id="label-forest-1" src="images/label-forest-1.png">
+                <img id="label-forest-2" src="images/label-forest-2.png">
+
+                <!-- Scene 3: rocks -->
+                <img id="sphere-rocks" src="spheres/rocks.jpg">
+                <img id="desc-rocks" src="images/desc-rocks.png">
+                <img id="label-rocks-0" src="images/label-rocks-0.png">
+                <img id="label-rocks-1" src="images/label-rocks-1.png">
+                <img id="label-rocks-2" src="images/label-rocks-2.png">
+
+                <!-- Scene 4: water -->
+                <img id="sphere-water" src="spheres/water.jpg">
+                <img id="desc-water" src="images/desc-water.png">
+                <img id="label-water-0" src="images/label-water-0.png">
+                <img id="label-water-1" src="images/label-water-1.png">
+                <img id="label-water-2" src="images/label-water-2.png">
+                <img id="label-water-3" src="images/label-water-3.png">
+            </a-assets>
+
+            <a-entity light="type: ambient; color: #FFF"></a-entity>
+
+            <!-- Scene 0: map -->
+            <a-entity id="scene0">
+                <a-sky color="#CCCCCC"></a-sky>
+                <a-image src="#exhibition-title" position="-6 4.3 -4" rotation="20 45 0" scale="4 4.5 1"></a-image>
+                <a-image src="#exhibition-desc" position="0 1 4" rotation="0 180 0" scale="8 4.5 1"></a-image>
+                <a-cylinder src="#map" position="0 1 0" rotation="0 -20 0" height="12" radius="8" theta-start="120" theta-length="150" open-ended="true" side="double">
+                    <a-image src="#title-world" position="1 1.5 -3" rotation="0 -30 0" onclick="toScene1()"
+                    event-set__enter="_event: mouseenter; _target: #world-hover; visible: true"
+                    event-set__enter2="_event: mouseenter; scale: 1.1 1.1 1"
+                    event-set__leave="_event: mouseleave; _target: #world-hover; visible: false"
+                    event-set__leave2="_event: mouseleave; scale: 1 1 1">
+                        <a-entity id="world-hover" visible="false">
+                            <a-image src="#thumb-world" position="1.1 0 0"></a-image>
+                            <a-image src="#place-world" position="1.1 -0.8 0" scale="0.8 0.25 1"></a-image>
+                        </a-entity>
+                    </a-image>
+                    <a-image src="#title-forest" position="2 -1 -3" rotation="-15 -30 0" onclick="toScene2()"
+                    event-set__enter="_event: mouseenter; _target: #forest-hover; visible: true"
+                    event-set__enter2="_event: mouseenter; scale: 1.1 1.1 1"
+                    event-set__leave="_event: mouseleave; _target: #forest-hover; visible: false"
+                    event-set__leave2="_event: mouseleave; scale: 1 1 1">
+                        <a-entity id="forest-hover" visible="false">
+                            <a-image src="#thumb-forest" position="1.1 0 0"></a-image>
+                            <a-image src="#place-forest" position="1.1 0.6 0" scale="0.8 0.3 1"></a-image>
+                        </a-entity>
+                        <a-image src="#words-forest" position="-0.9 -0.8 0" scale="0.4 1 1"></a-image>
+                    </a-image>
+                    <a-image src="#title-rocks" position="-2 2 -3" rotation="15 30 0" onclick="toScene3()"
+                    event-set__enter="_event: mouseenter; _target: #rocks-hover; visible: true"
+                    event-set__enter2="_event: mouseenter; scale: 1.1 1.1 1"
+                    event-set__leave="_event: mouseleave; _target: #rocks-hover; visible: false"
+                    event-set__leave2="_event: mouseleave; scale: 1 1 1">
+                        <a-entity id="rocks-hover" visible="false">
+                            <a-image src="#thumb-rocks" position="-1.1 0 0"></a-image>
+                            <a-image src="#place-rocks" position="-1.1 0.6 0" scale="0.9 0.3 1"></a-image>
+                        </a-entity>
+                        <a-image src="#words-rocks" position="1.8 0.7 0" scale="0.4 1 1"></a-image>
+                    </a-image>
+                    <a-image src="#title-water" position="-3 -1 -1" rotation="-15 60 0" onclick="toScene4()"
+                    event-set__enter="_event: mouseenter; _target: #water-hover; visible: true"
+                    event-set__enter2="_event: mouseenter; scale: 1.1 1.1 1"
+                    event-set__leave="_event: mouseleave; _target: #water-hover; visible: false"
+                    event-set__leave2="_event: mouseleave; scale: 1 1 1">
+                        <a-entity id="water-hover" visible="false">
+                            <a-image src="#thumb-water" position="-1.1 0 0"></a-image>
+                            <a-image src="#place-water" position="-1.1 -1 0" scale="0.8 0.6 1"></a-image>
+                        </a-entity>
+                        <a-image src="#words-water" position="0.9 -0.6 0" scale="0.4 1 1"></a-image>
+                    </a-image>
+                </a-cylinder>
+            </a-entity>
+
+            <!-- Scene 1: world -->
+            <a-entity id="scene1" visible="false">
+                <a-sky src="#sphere-world" rotation="0 100 0">
+                    <a-image src="#title-world" position="-6 4.2 1.5" rotation="0 -35 0" scale="2 2 2"></a-image>
+                    <a-image src="#desc-world" position="-5 1 4" rotation="0 -45 0" scale="8 4.5 1"></a-image>
+                    <a-image src="#back" position="-5.2 3 -0.6" rotation="-30 -90 0" scale="2 0.5 1" onclick="toScene0()"
+                    event-set__enter="_event: mouseenter; scale: 2.1 0.6 1"
+                    event-set__leave="_event: mouseleave; scale: 2 0.5 1" ></a-image>
+                </a-sky>
+            </a-entity>
+
+            <!-- Scene 2: forest -->
+            <a-entity id="scene2" visible="false">
+                <a-sky src="#sphere-forest" rotation="0 120 0">
+                    <a-image src="#title-forest" position="-3.6 3.7 6.7" rotation="0 0 0" scale="2 2 2"></a-image>
+                    <a-image src="#desc-forest" position="-0.6 0 6.7" rotation="0 0 0" scale="8 4.5 1"></a-image>
+                    <a-image src="#back" position="-5.2 1.8 4.4" rotation="0 -45 0" scale="2 0.5 1" onclick="toScene0()"
+                    event-set__enter="_event: mouseenter; scale: 2.1 0.6 1"
+                    event-set__leave="_event: mouseleave; scale: 2 0.5 1" ></a-image>
+                    <!-- Label 0 -->
+                    <a-image src="#label-forest-0" position="-2 -4 6.8" rotation="0 0 0" scale="4 2 1"></a-image>
+                    <!-- Label 1 -->
+                    <a-box material="transparent: true; opacity:0;" position="-17 4.5 3.4" rotation="0 -90 0" scale="8 8 8" transparent="true"
+                    event-set__enter="_event: mouseenter; _target: #label-forest-1-hover; visible: true"
+                    event-set__leave="_event: mouseleave; _target: #label-forest-1-hover; visible: false">
+                        <a-entity id="label-forest-1-hover" visible="false">
+                            <a-image src="#label-forest-1" position="-1 0 0"></a-image>
+                        </a-entity>
+                    </a-box>
+                    <!-- Label 2 -->
+                    <a-box material="transparent: true; opacity:0;" position="17.4 5.2 0.1" rotation="0 90 0" scale="8 8 8" transparent="true"
+                    event-set__enter="_event: mouseenter; _target: #label-forest-2-hover; visible: true"
+                    event-set__leave="_event: mouseleave; _target: #label-forest-2-hover; visible: false">
+                        <a-entity id="label-forest-2-hover" visible="false">
+                            <a-image src="#label-forest-2" position="1.2 0 0"></a-image>
+                        </a-entity>
+                    </a-box>
+                </a-sky>
+            </a-entity>
+
+            <!-- Scene 3: rocks -->
+            <a-entity id="scene3" visible="false">
+                <a-sky src="#sphere-rocks" rotation="0 180 0">
+                    <a-image src="#title-rocks" position="-2.6 4.6 6.9" rotation="0 0 0" scale="2 2 2"></a-image>
+                    <a-image src="#desc-rocks" position="0.22 1 6.8" rotation="0 0 0" scale="8 4.5 1"></a-image>
+                    <a-image src="#back" position="-4 2.2 3.6" rotation="0 -45 0" scale="2 0.5 1" onclick="toScene0()"
+                    event-set__enter="_event: mouseenter; scale: 2.1 0.6 1"
+                    event-set__leave="_event: mouseleave; scale: 2 0.5 1" ></a-image>
+                    <!-- Label 0 -->
+                    <a-image src="#label-rocks-0" position="7.7 -4 5" rotation="0 90 0" scale="4 2 1"></a-image>
+                    <!-- Label 1 -->
+                    <a-image src="#label-rocks-1" position="7.7 -4 0" rotation="0 90 0" scale="4 2 1"></a-image>
+                    <!-- Label 2 -->
+                    <a-image src="#label-rocks-2" position="7.7 -4 -5" rotation="0 90 0" scale="4 2 1"></a-image>
+                </a-sky>
+            </a-entity>
+
+            <!-- Scene 4: water -->
+            <a-entity id="scene4" visible="false">
+                <a-sky src="#sphere-water" rotation="0 -45 0">
+                    <a-image src="#title-water" position="8.1 3.7 3.2" rotation="0 90 0" scale="2 2 2"></a-image>
+                    <a-image src="#desc-water" position="7.7 0 0.2" rotation="0 90 0" scale="8 4.5 1"></a-image>
+                    <a-image src="#back" position="4.5 2 4" rotation="-30 60 0" scale="2 0.5 1" onclick="toScene0()"
+                    event-set__enter="_event: mouseenter; scale: 2.1 0.6 1"
+                    event-set__leave="_event: mouseleave; scale: 2 0.5 1" ></a-image>
+                    <!-- Label 0 -->
+                    <a-image src="#label-water-0" position="7.7 -4 2.2" rotation="0 90 0" scale="4 2 1"></a-image>
+                    <!-- Label 1 -->
+                    <a-box material="transparent: true; opacity:0;" position="0.6 -0.5 -13" rotation="0 180 0" scale="8 8 8" transparent="true"
+                    event-set__enter="_event: mouseenter; _target: #label-water-1-hover; visible: true"
+                    event-set__leave="_event: mouseleave; _target: #label-water-1-hover; visible: false">
+                        <a-entity id="label-water-1-hover" visible="false">
+                            <a-image src="#label-water-1" position="1.3 0 0"></a-image>
+                        </a-entity>
+                    </a-box>
+                    <!-- Label 2 -->
+                    <a-box material="transparent: true; opacity:0;" position="-11.5 -0.5 0.17" rotation="0 -90 0" scale="8 8 8" transparent="true"
+                    event-set__enter="_event: mouseenter; _target: #label-water-2-hover; visible: true"
+                    event-set__leave="_event: mouseleave; _target: #label-water-2-hover; visible: false">
+                        <a-entity id="label-water-2-hover" visible="false">
+                            <a-image src="#label-water-2" position="1.3 0 0"></a-image>
+                        </a-entity>
+                    </a-box>
+                    <!-- Label 3 -->
+                    <a-box material="transparent: true; opacity:0;" position="-3.6 -0.5 16.5" rotation="0 0 0" scale="8 8 8" transparent="true"
+                    event-set__enter="_event: mouseenter; _target: #label-water-3-hover; visible: true"
+                    event-set__leave="_event: mouseleave; _target: #label-water-3-hover; visible: false">
+                        <a-entity id="label-water-3-hover" visible="false">
+                            <a-image src="#label-water-3" position="1.1 0 0"></a-image>
+                        </a-entity>
+                    </a-box>
+                </a-sky>
+            </a-entity>
+
+
+            <a-camera reverse-mouse-drag="true">
+                <a-entity id="cursor" position="0 0 -2" cursor geometry="primitive: ring; radiusOuter: 0.06; radiusInner: 0.04" material="color: white">
+                <a-animation begin="click" easing="ease-in" attribute="scale"
+           fill="backwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
+               <a-animation begin="fusing" easing="ease-in" attribute="scale"
+           fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
+            </a-camera>
+
+        </a-scene>
+
+        <script type="text/javascript">
+        function toScene0() {
+            document.getElementById('scene0').setAttribute('visible', 'true')
+            document.getElementById('scene1').setAttribute('visible', 'false')
+            document.getElementById('scene2').setAttribute('visible', 'false')
+            document.getElementById('scene3').setAttribute('visible', 'false')
+            document.getElementById('scene4').setAttribute('visible', 'false')
+        }
+        function toScene1() {
+            document.getElementById('scene0').setAttribute('visible', 'false')
+            document.getElementById('scene1').setAttribute('visible', 'true')
+            document.getElementById('scene2').setAttribute('visible', 'false')
+            document.getElementById('scene3').setAttribute('visible', 'false')
+            document.getElementById('scene4').setAttribute('visible', 'false')
+        }
+        function toScene2() {
+            document.getElementById('scene0').setAttribute('visible', 'false')
+            document.getElementById('scene1').setAttribute('visible', 'false')
+            document.getElementById('scene2').setAttribute('visible', 'true')
+            document.getElementById('scene3').setAttribute('visible', 'false')
+            document.getElementById('scene4').setAttribute('visible', 'false')
+        }
+        function toScene3() {
+            document.getElementById('scene0').setAttribute('visible', 'false')
+            document.getElementById('scene1').setAttribute('visible', 'false')
+            document.getElementById('scene2').setAttribute('visible', 'false')
+            document.getElementById('scene3').setAttribute('visible', 'true')
+            document.getElementById('scene4').setAttribute('visible', 'false')
+        }
+        function toScene4() {
+            document.getElementById('scene0').setAttribute('visible', 'false')
+            document.getElementById('scene1').setAttribute('visible', 'false')
+            document.getElementById('scene2').setAttribute('visible', 'false')
+            document.getElementById('scene3').setAttribute('visible', 'false')
+            document.getElementById('scene4').setAttribute('visible', 'true')
+        }
+        </script>
+    </body>
+</html>
